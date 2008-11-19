@@ -1,0 +1,9 @@
+[submodule "vendor/plugins/eschaton"]
+	path = vendor/plugins/eschaton
+	url = git://github.com/yawningman/eschaton.git
+[submodule "vendor/plugins/quiver_core"]
+	path = vendor/plugins/quiver_core
+	url = git://github.com/yawningman/quiver_core.git
+[submodule "vendor/plugins/spatial_adapter"]
+	path = vendor/plugins/spatial_adapter
+	url = git://github.com/brookscl/spatial_adapter.git
