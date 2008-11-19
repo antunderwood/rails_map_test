@@ -1,0 +1,5 @@
+page.mapping_script do
+  @polygons.each do |polygon|
+    page.map.add_polygon :vertices => polygon
+  end
+end

@@ -1,0 +1,13 @@
+page << "var map;"
+page.mapping_script do
+  map = Google::Map.new(:controls => [:small_map, :map_type],
+                        :center => {:latitude => 48.45, :longitude => 8.43},
+                        :zoom => 4)
+
+end
+
+page << "function clear_map(){"
+  page.mapping_script do
+    page.map.clear
+  end
+page << "}"

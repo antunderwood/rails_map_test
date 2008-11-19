@@ -1,0 +1,38 @@
+page.call("clear_map")
+page.mapping_script do
+  @region_counts.each_key do |country|
+    @region_counts[country].each_key do |region|
+      unless @region_counts[country][region]["coordinates"].nil?
+        if @region_counts[country][region].has_key?("Environmental") && @region_counts[country][region].has_key?("Clinical")
+          source = "Both"
+        elsif @region_counts[country][region].has_key?("Clinical")
+          source = "Clinical"
+        elsif @region_counts[country][region].has_key?("Environmental")
+          source = "Environmental"
+        else
+          source = "Unknown"
+        end
+        @region_counts[country][region]["coordinates"].each do |polygon|
+          case source
+          when "Both"
+            fill_colour = "#FF0000"
+            info_text = "Clinical: #{ @region_counts[country][region]["Clinical"]}<br>Environmental: #{ @region_counts[country][region]["Environmental"]}<br>Unknown: #{ @region_counts[country][region]["Unknown"]}"
+          when "Clinical"
+            fill_colour = "#0000FF"
+            info_text = "Clinical: #{ @region_counts[country][region]["Clinical"]}<br>Unknown: #{ @region_counts[country][region]["Unknown"]}"
+          when "Environmental"
+            fill_colour = "#00FF00"
+            info_text = "Environmental: #{ @region_counts[country][region]["Environmental"]}<br>Unknown: #{ @region_counts[country][region]["Unknown"]}"
+          when "Unknown"
+            fill_colour = "#FFFFFF"
+            info_text = "Unknown: #{ @region_counts[country][region]["Unknown"]}"
+          end
+          map_polygon = page.map.add_polygon :vertices => polygon, :fill_colour => fill_colour
+          map_polygon.click do |script, location| 
+            page.map.open_info_window :text => info_text, :location => location
+          end
+        end
+      end
+    end
+  end
+end

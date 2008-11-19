@@ -1,0 +1,6 @@
+page.mapping_script do
+   polygon = page.map.add_polygon :vertices => @coord_array
+  @coord_array.each do |location|
+    marker = page.map.add_marker :location => location
+  end
+end
