@@ -1,4 +1,3 @@
-page << "var map;"
 page.mapping_script do
   map = Google::Map.new(:controls => [:small_map, :map_type],
                         :center => {:latitude => 48.45, :longitude => 8.43},
