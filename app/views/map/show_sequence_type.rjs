@@ -29,8 +29,8 @@ page.mapping_script do
           end
           map_polygon = page.map.add_polygon :vertices => polygon, :fill_colour => fill_colour
           map_polygon.click do |script, location| 
-            page.map.open_info_window :text => info_text, :location => location
-          end
+            page.map.open_info_window :text => info_text, :location => map_polygon.center 
+           end
         end
       end
     end
