@@ -1,5 +1,6 @@
 page.mapping_script do
   @polygons.each do |polygon|
-    page.map.add_polygon :vertices => polygon
+    encoded_polygon = Google::Polygon.new(:encoded => {:points => polygon[:points], :levels =>  polygon[:levels], :num_levels =>  polygon[:numLevels], :zoom_factor =>  polygon[:zoomFactor]})
+    page.map.add_polygon(encoded_polygon)
   end
 end

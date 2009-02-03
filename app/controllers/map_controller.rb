@@ -31,12 +31,13 @@ class MapController < ApplicationController
     regions = Region.find_by_sql ["SELECT country_code, nuts_id, simplify(the_geom,0.1) as the_geom  FROM regions where country_code = ? AND stat_level = ?" , params[:country], 0] # this sql could potentially return several regions therefore it is an array of Region objects
     @polygons = Array.new
     regions.each do |region| 
-      @polygons += get_polygons(region.the_geom.geometries)
+      @polygons += get_ecoded_polygons(region.the_geom.geometries)
     end
   end
   def show_sequence_type
     # region = Region.find_by_country_code_and_stat_level(params[:country], 0)
     region_results = Strain.find_by_sql ["SELECT country, region, source FROM strains where sequence_type = ?" , params[:sequence_type]] # this sql could potentially return several regions therefore it is an array of Region objects
+    @number_of_regions = region_results.size
     @region_counts = Hash.new
     region_results.each do |region_result|
       country = region_result.country
@@ -65,7 +66,7 @@ class MapController < ApplicationController
         unless region_mapping.nil?
           coords_array = Region.find_by_sql ["SELECT simplify(the_geom,0.05) as the_geom  FROM regions where nuts_id = ?" , region_mapping.nuts_id]
           coords_array.each do |coords|
-            @region_counts[country][region]["coordinates"] = get_polygons(coords.the_geom.geometries)
+            @region_counts[country][region]["coordinates"] = get_ecoded_polygons(coords.the_geom.geometries)
           end
         end
       end
@@ -77,6 +78,18 @@ class MapController < ApplicationController
     geometries.each do |multi_polygon|
       multi_polygon.rings.each do |ring|
         polygons << ring.points.map{|point| [point.y,point.x]}
+      end
+    end
+    return polygons
+  end
+  def get_ecoded_polygons(geometries)
+    require 'encoder'
+    polygons = Array.new
+    geometries.each do |multi_polygon|
+      multi_polygon.rings.each do |ring|
+        encoder = GMapPolylineEncoder.new()
+        point_data = ring.points.map{|point| [point.y,point.x]}
+        polygons << encoder.encode(point_data)
       end
     end
     return polygons
