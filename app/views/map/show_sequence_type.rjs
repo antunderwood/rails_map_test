@@ -27,12 +27,17 @@ page.mapping_script do
             fill_colour = "#FFFFFF"
             info_text = "Unknown: #{ @region_counts[country][region]["Unknown"]}"
           end
-          encoded_polygon = Google::Polygon.new(:encoded => {:points => polygon[:points], :levels =>  polygon[:levels], :num_levels =>  polygon[:numLevels], :zoom_factor =>  polygon[:zoomFactor]}, :fill_colour => fill_colour)
-          # map_polygon = page.map.add_polygon :vertices => polygon, :fill_colour => fill_colour
-          map_polygon = page.map.add_polygon(encoded_polygon)
+          map_polygon = nil
+          if @region_counts[country][region]["encoded"]
+            encoded_polygon = Google::Polygon.new(:encoded => {:points => polygon[:points], :levels =>  polygon[:levels], :num_levels =>  polygon[:numLevels], :zoom_factor =>  polygon[:zoomFactor]}, :fill_colour => fill_colour)
+            map_polygon = page.map.add_polygon(encoded_polygon)
+          else
+            map_polygon = page.map.add_polygon :vertices => polygon, :fill_colour => fill_colour
+          end
+
           map_polygon.click do |script, location| 
             page.map.open_info_window :text => info_text, :location => map_polygon.center 
-           end
+          end
         end
       end
     end

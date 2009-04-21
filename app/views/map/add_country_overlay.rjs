@@ -1,0 +1,5 @@
+page.mapping_script do
+  @region_images.each do |region_image|
+     overlay = page.map.add_ground_overlay :image_url => "/rails_map_test/images/#{region_image['image_name']}?#{Time.now.to_f}", :sw => region_image['sw'].split(" ").reverse , :ne => region_image['ne'].split(" ").reverse
+   end
+end

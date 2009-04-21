@@ -28,10 +28,17 @@ class MapController < ApplicationController
   end
   def show_country
     # region = Region.find_by_country_code_and_stat_level(params[:country], 0)
-    regions = Region.find_by_sql ["SELECT country_code, nuts_id, simplify(the_geom,0.1) as the_geom  FROM regions where country_code = ? AND stat_level = ?" , params[:country], 0] # this sql could potentially return several regions therefore it is an array of Region objects
+    regions = Region.find_by_sql ["SELECT country_code, nuts_id, simplify(the_geom,0.01) as the_geom  FROM regions where country_code = ? AND stat_level = ?" , params[:country], 3] # this sql could potentially return several regions therefore it is an array of Region objects
     @polygons = Array.new
-    regions.each do |region| 
-      @polygons += get_ecoded_polygons(region.the_geom.geometries)
+    regions.each do |region|
+      if params[:not_encoded]
+        @polygons += get_polygons(region.the_geom.geometries)
+        @encoded = false
+      else
+        @polygons += get_encoded_polygons(region.the_geom.geometries)
+        @encoded = true
+      end 
+      
     end
   end
   def show_sequence_type
@@ -66,7 +73,13 @@ class MapController < ApplicationController
         unless region_mapping.nil?
           coords_array = Region.find_by_sql ["SELECT simplify(the_geom,0.05) as the_geom  FROM regions where nuts_id = ?" , region_mapping.nuts_id]
           coords_array.each do |coords|
-            @region_counts[country][region]["coordinates"] = get_ecoded_polygons(coords.the_geom.geometries)
+            if params[:not_encoded]
+              @region_counts[country][region]["coordinates"] = get_polygons(coords.the_geom.geometries)
+              @region_counts[country][region]["encoded"] = false
+            else
+              @region_counts[country][region]["coordinates"] = get_encoded_polygons(coords.the_geom.geometries)
+              @region_counts[country][region]["encoded"] = true
+            end
           end
         end
       end
@@ -82,7 +95,7 @@ class MapController < ApplicationController
     end
     return polygons
   end
-  def get_ecoded_polygons(geometries)
+  def get_encoded_polygons(geometries)
     require 'encoder'
     polygons = Array.new
     geometries.each do |multi_polygon|
@@ -93,5 +106,21 @@ class MapController < ApplicationController
       end
     end
     return polygons
+  end
+  def add_country_overlay
+    require 'svg_processing'
+    regions = Region.find_by_sql ["SELECT assvg(the_geom) as svg_string, box2d(the_geom) FROM regions where country_code = ? AND stat_level = ?" , params[:country], 2]
+    @region_images = []
+    regions.each_with_index do |region, region_number|
+      create_country_image(region.svg_string, 'purple', "#{params[:country]}_#{region_number}.png")
+      boundary_string = region.box2d
+      boundary_string.sub!(/^BOX\(/,"")
+      boundary_string.sub!(/\)$/,"")
+      sw,ne = boundary_string.split(",")
+      @region_images[region_number] = Hash.new
+      @region_images[region_number]['image_name'] = "#{params[:country]}_#{region_number}.png"
+      @region_images[region_number]['sw'] = sw
+      @region_images[region_number]['ne'] = ne
+    end
   end
 end

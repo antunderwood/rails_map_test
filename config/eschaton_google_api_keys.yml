@@ -1,0 +1,11 @@
+# You can use keys for your environments(development, test and production) or you can specify 
+# keys for specific domain names(e.g. www.mydomain.org, testing.localhost). If a key is supplied for the domain that 
+# corresponds to your current domain it will honored over environment keys.
+
+development:
+ ABQIAAAAOXRDObQXKO6TqkaeH1QD_hTUvjFK22_4pVUbv2Wi5uhrlC4dExRTD09QO_NHbFMswjPL9hY3JM1stA # hpa-bioinformatics.org.uk
+test:
+ test_key_here
+production:
+  put_your_production_key_here
+

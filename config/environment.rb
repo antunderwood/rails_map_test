@@ -6,8 +6,6 @@ ENV['RAILS_ENV'] = 'development'
 
 #gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '>=2.2.0' unless defined? RAILS_GEM_VERSION
-GOOGLE_MAPS_API_KEY = 'ABQIAAAAOXRDObQXKO6TqkaeH1QD_hTUvjFK22_4pVUbv2Wi5uhrlC4dExRTD09QO_NHbFMswjPL9hY3JM1stA' # hpa-bioinformatics.org.uk
-# GOOGLE_MAPS_API_KEY = 'ABQIAAAAOXRDObQXKO6TqkaeH1QD_hRtJMyHbPGkpwmR8ZfxtIV_VwQMLBRaDbayy9CtBraDFCNz6Ii5BUaDjg' #158.119.175.186
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -69,4 +67,4 @@ Rails::Initializer.run do |config|
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 end
-ActionController::AbstractRequest.relative_url_root = '/rails_map_test' 
+ActionController::Base.relative_url_root = '/rails_map_test' 
