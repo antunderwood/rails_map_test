@@ -8,3 +8,19 @@
   -moz-opacity: 0.7;
   filter:alpha(opacity=70);
 }
+#statusbar{
+  position:absolute;
+  top:30px;
+  left:80px;
+  width:180px;
+  color:#fff;
+  border:1px solid #fff;
+  vertical-align:middle;
+  font-size:11px;
+  font-family:arial,sans-serif;
+  background:#000 url(../images/loading.gif) no-repeat 2px 2px;
+  padding:4px 0 4px 22px;
+}
+#statusbar_content{
+  font-size:9px;
+}

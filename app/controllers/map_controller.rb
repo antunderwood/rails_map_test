@@ -24,7 +24,7 @@ class MapController < ApplicationController
     end
   end
   def add_markers
-    @coord_array = [[-33.941, 18.489], [-34.045, 18.630], [-34.091, 18.451], [-34.002, 18.391], [-33.941, 18.489]]
+    @coord_array = [[ 51.50874245880332, -3.33984375], [51.6180165487737, -0.087890625], [56.022948079627426, -3.1640625,]]
   end
   def show_country
     # region = Region.find_by_country_code_and_stat_level(params[:country], 0)
