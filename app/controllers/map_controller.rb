@@ -109,10 +109,10 @@ class MapController < ApplicationController
   end
   def add_country_overlay
     require 'svg_processing'
-    regions = Region.find_by_sql ["SELECT assvg(the_geom) as svg_string, box2d(the_geom) FROM regions where country_code = ? AND stat_level = ?" , params[:country], 2]
+    regions = Region.find_by_sql ["SELECT assvg(the_geom) as svg_string, box2d(the_geom) FROM regions where country_code = ? AND stat_level = ?" , params[:country], 3]
     @region_images = []
     regions.each_with_index do |region, region_number|
-      create_country_image(region.svg_string, 'purple', "#{params[:country]}_#{region_number}.png")
+      create_country_image(region.svg_string, 'purple', "#{params[:country]}_#{region_number}.png", 50)
       boundary_string = region.box2d
       boundary_string.sub!(/^BOX\(/,"")
       boundary_string.sub!(/\)$/,"")

@@ -1,5 +1,7 @@
 page.mapping_script do
   @region_images.each do |region_image|
-     overlay = page.map.add_ground_overlay :image_url => "/rails_map_test/images/#{region_image['image_name']}?#{Time.now.to_f}", :sw => region_image['sw'].split(" ").reverse , :ne => region_image['ne'].split(" ").reverse
+     overlay = page.map.add_ground_overlay :image => "/rails_map_test/images/#{region_image['image_name']}?#{Time.now.to_f}" "http://graargh.returnstrue.com/rajdeep/maps/iiml/customlayout3/base_combined_16.jpg",
+                                            :bounds => {:south_west_point => region_image['sw'].split(" ").reverse,
+                                                        :north_east_point => region_image['ne'].split(" ").reverse}
    end
 end

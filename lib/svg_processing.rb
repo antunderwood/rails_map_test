@@ -1,4 +1,4 @@
-def create_country_image(svg_string, colour, image_name)
+def create_country_image(svg_string, colour, image_name, image_size=200)
   require 'RMagick'
   # split into individual items including the M and Z characters
   svg_items = svg_string.split(" ")
@@ -24,9 +24,9 @@ def create_country_image(svg_string, colour, image_name)
   # calculate height and width
   x_width = max_x - min_x
   y_height = max_y - min_y
-  # calculate the x and y scale values so that the width and height would be 400 pixels
-  x_scale_factor = 200/x_width
-  y_scale_factor = 200/y_height
+  # calculate the x and y scale values so that the width and height would be image_size pixels
+  x_scale_factor = image_size/x_width
+  y_scale_factor = image_size/y_height
   # find the minimum of these 2 so that the image will be no bigger than 400 pixels in each dimension
   scale_factor = [x_scale_factor, y_scale_factor].min
   # print out these vakues
