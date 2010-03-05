@@ -1,7 +1,7 @@
 class MapController < ApplicationController
 
   def index
-    @sequence_types = Strain.find( :all, :select => 'DISTINCT sequence_type', :order => :sequence_type ).map{|strain| strain.sequence_type.to_i}
+
   end
   def info
     respond_to do |format|
@@ -24,7 +24,12 @@ class MapController < ApplicationController
     end
   end
   def add_markers
-    @coord_array = [[ 51.50874245880332, -3.33984375], [51.6180165487737, -0.087890625], [56.022948079627426, -3.1640625,]]
+    @coord_array = []
+    (2..4).each do |town_id|
+      town = Town.find(town_id)
+      @coord_array << [town.lonlat.y, town.lonlat.x]
+    end
+      
   end
   def show_country
     # region = Region.find_by_country_code_and_stat_level(params[:country], 0)

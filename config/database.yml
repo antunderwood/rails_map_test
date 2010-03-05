@@ -2,9 +2,9 @@
 #   gem install sqlite3-ruby (not necessary on OS X Leopard)
 development:
     adapter: postgresql
-    database: rails_map_test
-    username: rails_map_user
-    password: 0rdananceSurv3y
+    database: legionella_development
+    username: legionella
+    password: l3g10n
     host: 158.119.147.20
     port: 5432
 

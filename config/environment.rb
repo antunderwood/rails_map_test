@@ -67,4 +67,3 @@ Rails::Initializer.run do |config|
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 end
-ActionController::Base.relative_url_root = '/rails_map_test' 

@@ -3,7 +3,8 @@
 # corresponds to your current domain it will honored over environment keys.
 
 development:
- ABQIAAAAOXRDObQXKO6TqkaeH1QD_hTUvjFK22_4pVUbv2Wi5uhrlC4dExRTD09QO_NHbFMswjPL9hY3JM1stA # hpa-bioinformatics.org.uk
+ ABQIAAAAOXRDObQXKO6TqkaeH1QD_hTatFSEpn1JOJ6AVCYW1AMd2a2sRxQuVmwAOfuW0_VGQUndP-JAuJW5WA # 158.119.147.40
+ #ABQIAAAAOXRDObQXKO6TqkaeH1QD_hTUvjFK22_4pVUbv2Wi5uhrlC4dExRTD09QO_NHbFMswjPL9hY3JM1stA # hpa-bioinformatics.org.uk
 test:
  test_key_here
 production:

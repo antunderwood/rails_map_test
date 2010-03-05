@@ -5,3 +5,4 @@ page.mapping_script do
                                                         :north_east_point => region_image['ne'].split(" ").reverse}
    end
 end
+page.replace_html "region_count", "<b>Number of regions:</b> #{@region_images.size}"
